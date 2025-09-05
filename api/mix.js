@@ -80,7 +80,15 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
   }
-  const { persons, temp, creative, chunkSize = 300, topN = 3 } = req.body;
+  const {
+    persons,
+    temp,
+    creative,
+    chunkSize = 300,
+    topN = 3,
+    topK = 12,
+    topK_final = 6
+  } = req.body;
   if (!persons || persons.length === 0) {
     return res.status(400).json({ error: '人物情報がありません' });
   }
@@ -151,7 +159,7 @@ export default async function handler(req, res) {
     totalMs: 0,
     chunksUsed: chunkCount,
     chunksTotal: chunkCount,
-    promptTokensEst: totalText.length,
+    promptTokensEst: queryText.length,
     completionTokensEst: profile.length
   };
   res.status(200).json({ profile, metrics, logs });

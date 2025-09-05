@@ -17,14 +17,9 @@ window.addEventListener('DOMContentLoaded', () => {
   `;
   document.body.insertBefore(info, document.body.firstChild);
 
-  // chunkサイズ・抽出数パラメータUI追加
-  const paramDiv = document.createElement('div');
-  paramDiv.className = 'params-extra';
-  paramDiv.innerHTML = `
-    <label>chunkサイズ: <input type="number" id="chunkSize" value="300" min="50" max="1000" step="10" style="width:60px"></label>
-    <label>重要chunk数: <input type="number" id="topN" value="3" min="1" max="10" step="1" style="width:40px"></label>
-  `;
-  document.body.insertBefore(paramDiv, document.body.children[1]);
+  // chunkサイズ・抽出数パラメータUI削除（不要）
+  const paramDiv = document.querySelector('.params-extra');
+  if (paramDiv) paramDiv.remove();
 });
 
 const byId = (id) => document.getElementById(id);
@@ -108,16 +103,15 @@ async function generate() {
 
   const tempVal = Number(byId('temp').value);
   const creativeVal = Number(byId('creative').value);
-  const chunkSize = Number(byId('chunkSize').value);
-  const topN = Number(byId('topN').value);
+  // chunkSize, topN, topK, topK_finalは固定値
   const body = {
     persons,
     temp: tempVal,
     creative: creativeVal,
-    chunkSize,
-    topN,
-    topK: Number(byId('topK').value),
-    topK_final: Number(byId('topK_final').value)
+    chunkSize: 300,
+    topN: 3,
+    topK: 12,
+    topK_final: 6
   };
 
   const r = await fetch('/api/mix', {

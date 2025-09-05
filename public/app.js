@@ -3,8 +3,8 @@ window.addEventListener('DOMContentLoaded', () => {
   const info = document.createElement('div');
   info.className = 'explain';
   info.innerHTML = `
-    <h3>用語解説</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:2em;font-size:1em;line-height:2;">
+    <h3 style="margin-bottom:0.2em;font-size:1.05em;">用語解説</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:1em;font-size:0.98em;line-height:1.5;margin-bottom:0.2em;">
       <span><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</span>
       <span><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</span>
       <span><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</span>
@@ -15,12 +15,14 @@ window.addEventListener('DOMContentLoaded', () => {
       <span style="color:#555">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</span>
     </div>
   `;
+  info.style.marginBottom = '0.2em';
+  info.style.paddingBottom = '0';
   document.body.insertBefore(info, document.body.firstChild);
-  // RAGコンソールの表示領域を広げる
+  // RAGコンソールの表示領域をさらに広げる
   const consoleDiv = byId('console');
   if (consoleDiv) {
-    consoleDiv.style.minHeight = '300px';
-    consoleDiv.style.maxHeight = '600px';
+    consoleDiv.style.minHeight = '400px';
+    consoleDiv.style.maxHeight = '800px';
     consoleDiv.style.overflowY = 'auto';
     consoleDiv.style.fontSize = '1.05em';
   }

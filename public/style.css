@@ -51,15 +51,21 @@ button:hover { background: #f7fafc; }
 .logline .tag { display: inline-block; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }
 .logline .time { color: #cbd5e0; margin-right: 6px; }
 .explain {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
   background: #f8f8fa;
   border-top: 1px solid #e2e8f0;
   padding: 8px 24px 8px 24px;
   font-size: 0.85em;
-  z-index: 100;
+  margin-top: 32px;
+  margin-bottom: 0;
+}
+.form {
+  margin-bottom: 16px;
+}
+.result {
+  margin-bottom: 16px;
+}
+.console {
+  margin-bottom: 16px;
 }
 @media (min-width: 800px) {
   main { grid-template-columns: 360px 1fr; }

@@ -13,15 +13,40 @@ button:hover { background: #f7fafc; }
 .banner.warn { background: #fefcbf; border: 1px solid #faf089; }
 .banner.error { background: #fed7d7; border: 1px solid #feb2b2; }
 .banner.hidden { display: none; }
-.result { display: grid; gap: 12px; }
+.result {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
 .card { padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 120px; background: #fff; }
 .sources { display: flex; flex-wrap: wrap; gap: 8px; }
 .pill { display: inline-block; padding: 6px 10px; background: #edf2f7; border-radius: 999px; text-decoration: none; color: #2d3748; font-size: 12px; }
 .metrics table { border-collapse: collapse; }
 .metrics th, .metrics td { border: 1px solid #e2e8f0; padding: 4px 8px; font-size: 12px; }
-.console { position: fixed; left: 0; right: 0; bottom: 0; height: 180px; background: #1a202c; color: #e2e8f0; border-top: 1px solid #2d3748; display: flex; flex-direction: column; margin-bottom: 120px; }
+.console {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  background: #1a202c;
+  color: #e2e8f0;
+  border-top: 1px solid #2d3748;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 120px;
+  margin-top: 8px;
+}
 .console-header { padding: 8px 12px; border-bottom: 1px solid #2d3748; font-weight: 600; }
-.console-body { flex: 1; overflow: auto; padding: 8px 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace; font-size: 12px; }
+.console-body {
+  height: 400px;
+  overflow-y: auto;
+  background: #18181b;
+  color: #f8fafc;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 1.05em;
+}
 .logline { margin-bottom: 2px; }
 .logline .tag { display: inline-block; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }
 .logline .time { color: #cbd5e0; margin-right: 6px; }

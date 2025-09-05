@@ -4,18 +4,26 @@ window.addEventListener('DOMContentLoaded', () => {
   info.className = 'explain';
   info.innerHTML = `
     <h3>用語解説</h3>
-    <ul>
-      <li><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</li>
-      <li><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</li>
-      <li><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</li>
-      <li><b>chunk（分割）</b>：長い説明文をAIが扱いやすいサイズに分割した単位です。</li>
-      <li><b>Embedding（ベクトル化）</b>：テキストをAIが意味的に理解できる数値の並び（ベクトル）に変換する処理です。</li>
-      <li><b>類似度（コサイン類似度）</b>：2つのベクトルがどれだけ似ているかを示す統計的指標。1に近いほど意味が近いです。<br>コサイン類似度は「2つのベクトルのなす角度のcos値」で、統計・機械学習でよく使われます。</li>
-      <li><b>重要部分抽出</b>：類似度が高いchunk（説明文の一部）をAIが「重要」と判断して抽出します。</li>
-    </ul>
-    <div style="font-size:0.95em;color:#555;margin-top:0.5em;">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</div>
+    <div style="display:flex;flex-wrap:wrap;gap:2em;font-size:1em;line-height:2;">
+      <span><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</span>
+      <span><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</span>
+      <span><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</span>
+      <span><b>chunk（分割）</b>：長い説明文をAIが扱いやすいサイズに分割した単位です。</span>
+      <span><b>Embedding（ベクトル化）</b>：テキストをAIが意味的に理解できる数値の並び（ベクトル）に変換する処理です。</span>
+      <span><b>類似度（コサイン類似度）</b>：2つのベクトルがどれだけ似ているかを示す統計的指標。1に近いほど意味が近いです。コサイン類似度は「2つのベクトルのなす角度のcos値」で、統計・機械学習でよく使われます。</span>
+      <span><b>重要部分抽出</b>：類似度が高いchunk（説明文の一部）をAIが「重要」と判断して抽出します。</span>
+      <span style="color:#555">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</span>
+    </div>
   `;
   document.body.insertBefore(info, document.body.firstChild);
+  // RAGコンソールの表示領域を広げる
+  const consoleDiv = byId('console');
+  if (consoleDiv) {
+    consoleDiv.style.minHeight = '300px';
+    consoleDiv.style.maxHeight = '600px';
+    consoleDiv.style.overflowY = 'auto';
+    consoleDiv.style.fontSize = '1.05em';
+  }
 
   // chunkサイズ・抽出数パラメータUI削除（不要）
   const paramDiv = document.querySelector('.params-extra');
@@ -146,19 +154,6 @@ async function generate() {
   const sources = byId('sources');
   sources.innerHTML = '';
   (data.sources||[]).forEach(s => sources.appendChild(pill(s.title, s.url)));
-
-  // metrics
-  const m = data.metrics || {};
-  byId('metrics').innerHTML = `
-    <table>
-      <tbody>
-        <tr><th>fetch</th><td>${fmtMs(m.fetchMs||0)}</td><th>split</th><td>${fmtMs(m.splitMs||0)}</td></tr>
-        <tr><th>embed</th><td>${fmtMs(m.embedMs||0)}</td><th>index</th><td>${fmtMs(m.indexMs||0)}</td></tr>
-        <tr><th>search</th><td>${fmtMs(m.searchMs||0)}</td><th>rerank</th><td>${fmtMs(m.rankMs||0)}</td></tr>
-        <tr><th>gen</th><td>${fmtMs(m.genMs||0)}</td><th>total</th><td>${fmtMs(m.totalMs||0)}</td></tr>
-        <tr><th>chunks</th><td>${m.chunksUsed||0}/${m.chunksTotal||0}</td><th>tokens</th><td>${m.promptTokensEst||0} + ${m.completionTokensEst||0}</td></tr>
-      </tbody>
-    </table>`;
 }
 
 ['w1','w2','w3','temp','creative'].forEach(id => {

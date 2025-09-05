@@ -21,20 +21,20 @@ window.addEventListener('DOMContentLoaded', () => {
   info.style.marginBottom = '0.2em';
   info.style.paddingBottom = '0';
 
-  // UI順序変更: RAGミキサー→コンソール→用語解説
+  // UI順序変更: RAGミキサー→コンソール→用語解説 → 用語解説を一番下に
   const mixer = document.getElementById('mixer');
   const consoleDiv = document.getElementById('consoleWrap') || document.getElementById('console');
   if (mixer && consoleDiv) {
     mixer.parentNode.insertBefore(consoleDiv, mixer.nextSibling);
-    consoleDiv.parentNode.insertBefore(info, consoleDiv.nextSibling);
+    mixer.parentNode.appendChild(info); // 用語解説を一番下に
   } else {
     document.body.appendChild(info);
   }
-  // RAGコンソールの表示領域をさらに広げる
+  // RAGコンソールの表示領域をさらに広げる（高さ2倍）
   const cDiv = byId('console');
   if (cDiv) {
-    cDiv.style.minHeight = '400px';
-    cDiv.style.maxHeight = '800px';
+    cDiv.style.minHeight = '800px';
+    cDiv.style.maxHeight = '1600px';
     cDiv.style.overflowY = 'auto';
     cDiv.style.fontSize = '1.05em';
   }

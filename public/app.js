@@ -53,7 +53,7 @@ function showLogs(logs) {
     if (data.kind === 'search' && data.similarities) {
       msg += '<br><b>抽出された重要chunkと類似度:</b><ul>';
       data.similarities.forEach((sim, i) => {
-        msg += `<li>chunk${i+1}: 類似度=${sim.score.toFixed(3)}<br><span style='font-size:0.9em;color:#555'>${sim.text}</span></li>`;
+        msg += `<li>chunk${i+1}: 類似度=${typeof sim.score === 'number' ? sim.score.toFixed(3) : 'N/A'}<br><span style='font-size:0.9em;color:#555'>${sim.text}</span></li>`;
       });
       msg += '</ul>';
     }
@@ -61,7 +61,7 @@ function showLogs(logs) {
     if (data.kind === 'search' && data.distribution) {
       msg += '<details style="margin-top:4px"><summary>全chunkの類似度分布（根拠を表示）</summary><ul>';
       data.distribution.forEach((sim, i) => {
-        msg += `<li>chunk${i+1}: 類似度=${sim.score.toFixed(3)}</li>`;
+        msg += `<li>chunk${i+1}: 類似度=${typeof sim.score === 'number' ? sim.score.toFixed(3) : 'N/A'}</li>`;
       });
       msg += '</ul></details>';
     }

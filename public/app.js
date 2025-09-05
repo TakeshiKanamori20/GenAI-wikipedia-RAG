@@ -1,34 +1,22 @@
 // 用語解説表示
 window.addEventListener('DOMContentLoaded', () => {
-  // 用語解説生成
-  const info = document.createElement('div');
-  info.className = 'explain';
-  info.innerHTML = `
-    <h3 style="margin-bottom:0.2em;font-size:0.95em;">用語解説</h3>
-    <div style="display:flex;flex-wrap:wrap;gap:1em;font-size:0.85em;line-height:1.5;margin-bottom:0.2em;">
-      <span><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</span>
-      <span><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</span>
-      <span><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</span>
-      <span><b>chunk（分割）</b>：長い説明文をAIが扱いやすいサイズに分割した単位です。</span>
-      <span><b>Embedding（ベクトル化）</b>：テキストをAIが意味的に理解できる数値の並び（ベクトル）に変換する処理です。</span>
-      <span><b>類似度（コサイン類似度）</b>：2つのベクトルがどれだけ似ているかを示す統計的指標。1に近いほど意味が近いです。コサイン類似度は「2つのベクトルのなす角度のcos値」で、統計・機械学習でよく使われます。</span>
-      <span><b>重要部分抽出</b>：類似度が高いchunk（説明文の一部）をAIが「重要」と判断して抽出します。</span>
-      <span><b>topK</b>：AIが最初に選ぶ候補の数（多いほど幅広く選ぶ）。</span>
-      <span><b>final</b>：最終的に残す候補の数（少ないほど厳選される）。</span>
-      <span style="color:#555">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</span>
-    </div>
-  `;
-  info.style.marginBottom = '0.2em';
-  info.style.paddingBottom = '0';
-
-  // UI順序変更: RAGミキサー→コンソール→用語解説 → 用語解説を一番下に
-  const mixer = document.getElementById('mixer');
-  const consoleDiv = document.getElementById('consoleWrap') || document.getElementById('console');
-  if (mixer && consoleDiv) {
-    mixer.parentNode.insertBefore(consoleDiv, mixer.nextSibling);
-    mixer.parentNode.appendChild(info); // 用語解説を一番下に
-  } else {
-    document.body.appendChild(info);
+  const info = byId('explain');
+  if (info) {
+    info.innerHTML = `
+      <h3 style="margin-bottom:0.2em;font-size:0.95em;">用語解説</h3>
+      <div style="display:flex;flex-wrap:wrap;gap:1em;font-size:0.85em;line-height:1.5;margin-bottom:0.2em;">
+        <span><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</span>
+        <span><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</span>
+        <span><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</span>
+        <span><b>chunk（分割）</b>：長い説明文をAIが扱いやすいサイズに分割した単位です。</span>
+        <span><b>Embedding（ベクトル化）</b>：テキストをAIが意味的に理解できる数値の並び（ベクトル）に変換する処理です。</span>
+        <span><b>類似度（コサイン類似度）</b>：2つのベクトルがどれだけ似ているかを示す統計的指標。1に近いほど意味が近いです。コサイン類似度は「2つのベクトルのなす角度のcos値」で、統計・機械学習でよく使われます。</span>
+        <span><b>重要部分抽出</b>：類似度が高いchunk（説明文の一部）をAIが「重要」と判断して抽出します。</span>
+        <span><b>topK</b>：AIが最初に選ぶ候補の数（多いほど幅広く選ぶ）。</span>
+        <span><b>final</b>：最終的に残す候補の数（少ないほど厳選される）。</span>
+        <span style="color:#555">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</span>
+      </div>
+    `;
   }
   // RAGコンソールの表示領域をさらに広げる（高さ2倍）
   const cDiv = byId('console');

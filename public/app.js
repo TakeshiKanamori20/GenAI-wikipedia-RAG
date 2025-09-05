@@ -53,8 +53,13 @@ let collected = { logs: [], metrics: {}, sources: [] };
 function showLogs(logs) {
   const c = byId('console');
   c.innerHTML = '';
+  const logWrap = document.createElement('div');
+  logWrap.style.display = 'flex';
+  logWrap.style.flexWrap = 'wrap';
+  logWrap.style.gap = '1.2em';
+  logWrap.style.fontSize = '1em';
   (logs||[]).forEach(data => {
-    const line = document.createElement('div');
+    const line = document.createElement('span');
     line.className = 'logline';
     const ts = new Date(data.ts).toLocaleTimeString();
     const kind = data.kind.toUpperCase();
@@ -76,8 +81,9 @@ function showLogs(logs) {
       msg += '</ul></details>';
     }
     line.innerHTML = `<span class="tag" style="background:${colorByKind[data.kind]||'#4a5568'}">[${kind}]</span> <span class="time">${ts}</span> <span class="msg">${msg}</span>`;
-    c.appendChild(line);
+    logWrap.appendChild(line);
   });
+  c.appendChild(logWrap);
   c.scrollTop = c.scrollHeight;
 }
 

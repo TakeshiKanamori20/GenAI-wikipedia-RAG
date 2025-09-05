@@ -18,14 +18,7 @@ window.addEventListener('DOMContentLoaded', () => {
       </div>
     `;
   }
-  // RAGコンソールの表示領域をさらに広げる（高さ2倍）
-  const cDiv = byId('console');
-  if (cDiv) {
-    cDiv.style.minHeight = '800px';
-    cDiv.style.maxHeight = '1600px';
-    cDiv.style.overflowY = 'auto';
-    cDiv.style.fontSize = '1.05em';
-  }
+  // RAGコンソールの高さ・スクロールはCSSで管理します
 
   // chunkサイズ・抽出数パラメータUI削除（不要）
   const paramDiv = document.querySelector('.params-extra');

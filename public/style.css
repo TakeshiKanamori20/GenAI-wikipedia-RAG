@@ -24,22 +24,19 @@ button:hover { background: #f7fafc; }
 .metrics table { border-collapse: collapse; }
 .metrics th, .metrics td { border: 1px solid #e2e8f0; padding: 4px 8px; font-size: 12px; }
 .console {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 180px;
+  position: static;
   background: #1a202c;
   color: #e2e8f0;
   border-top: 1px solid #2d3748;
   display: flex;
   flex-direction: column;
-  margin-bottom: 120px;
-  margin-top: 8px;
+  margin: 24px 0 0 0;
+  padding: 0;
+  width: 100%;
 }
 .console-header { padding: 8px 12px; border-bottom: 1px solid #2d3748; font-weight: 600; }
 .console-body {
-  height: 400px;
+  min-height: 120px;
   max-height: 60vh;
   overflow-y: auto;
   background: #18181b;
@@ -48,6 +45,8 @@ button:hover { background: #f7fafc; }
   border-radius: 6px;
   font-size: 1.05em;
   position: static;
+  width: 100%;
+  box-sizing: border-box;
 }
 .logline { margin-bottom: 2px; }
 .logline .tag { display: inline-block; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }

@@ -40,12 +40,14 @@ button:hover { background: #f7fafc; }
 .console-header { padding: 8px 12px; border-bottom: 1px solid #2d3748; font-weight: 600; }
 .console-body {
   height: 400px;
+  max-height: 60vh;
   overflow-y: auto;
   background: #18181b;
   color: #f8fafc;
   padding: 12px 18px;
   border-radius: 6px;
   font-size: 1.05em;
+  position: static;
 }
 .logline { margin-bottom: 2px; }
 .logline .tag { display: inline-block; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }

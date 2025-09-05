@@ -85,6 +85,7 @@ export default async function handler(req, res) {
     temp,
     creative,
     chunkSize = 300,
+    chunkN,
     topN = 3,
     topK = 12,
     topK_final = 6
@@ -103,7 +104,19 @@ export default async function handler(req, res) {
     return { ...p, summary };
   }));
   // 分割
-  const allChunks = personsWithSummary.flatMap(p => splitText(p.summary, chunkSize));
+  // chunkN（分割数）が指定されていればchunkSizeを自動計算
+  let usedChunkSize = chunkSize;
+  if (chunkN && chunkN > 0) {
+    // 各人物ごとに分割数を均等に割り当て
+    personsWithSummary.forEach(p => {
+      const len = p.summary.length;
+      p._chunkSize = Math.max(50, Math.ceil(len / chunkN));
+    });
+    // 分割
+    var allChunks = personsWithSummary.flatMap(p => splitText(p.summary, p._chunkSize));
+  } else {
+    var allChunks = personsWithSummary.flatMap(p => splitText(p.summary, chunkSize));
+  }
   const chunkCount = allChunks.length;
   logs.push({ ts: Date.now(), kind: 'split', message: `Wikipediaの説明文を分割しています（分割数: ${chunkCount}）。` });
   // Embedding

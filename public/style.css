@@ -55,10 +55,20 @@ button:hover { background: #f7fafc; }
   background: #f8f8fa;
   border-top: 1px solid #e2e8f0;
   padding: 8px 24px 8px 24px;
-  font-size: 0.85em;
+  font-size: 0.95em;
   margin-top: 32px;
   margin-bottom: 0;
 }
+.explain div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+  font-size: 0.85em;
+  line-height: 1.5;
+  margin-bottom: 0.2em;
+  overflow-x: auto;
+}
+
 .form {
   margin-bottom: 16px;
 }

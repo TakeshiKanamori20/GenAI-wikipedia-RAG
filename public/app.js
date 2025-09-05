@@ -2,9 +2,10 @@
 window.addEventListener('DOMContentLoaded', () => {
   const info = byId('explain');
   if (info) {
+    // innerHTMLのみ設定。display, overflow, style等はCSSで管理。
     info.innerHTML = `
-      <h3 style="margin-bottom:0.2em;font-size:0.95em;">用語解説</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:1em;font-size:0.85em;line-height:1.5;margin-bottom:0.2em;">
+      <h3>用語解説</h3>
+      <div>
         <span><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</span>
         <span><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</span>
         <span><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</span>
@@ -112,12 +113,14 @@ async function generate() {
 
   const tempVal = Number(byId('temp').value);
   const creativeVal = Number(byId('creative').value);
-  // chunkSize, topN, topK, topK_finalは固定値
+  const chunkN = Number(byId('chunkN').value) || 6;
+  // chunkSize, topN, topK, topK_final, chunkN
   const body = {
     persons,
     temp: tempVal,
     creative: creativeVal,
     chunkSize: 300,
+    chunkN,
     topN: 3,
     topK: 12,
     topK_final: 6

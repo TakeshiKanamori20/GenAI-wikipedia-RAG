@@ -1,6 +1,4 @@
 // Vercel Serverless Function: /api/mix
-import { NextResponse } from 'next/server';
-
 export const config = { runtime: 'nodejs' };
 
 export default async function handler(req, res) {

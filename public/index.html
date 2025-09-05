@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Wikipedia RAG Mixer</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>Wikipedia RAG ミキサー</h1>
+    <p class="note">生成結果には創作が含まれます。事実は出典で確認。WikipediaはCC BY-SAに基づき出典を明示しています。</p>
+  </header>
+
+  <main>
+    <section class="form">
+      <div class="row">
+        <label>人物A</label>
+        <input id="name1" placeholder="人物名" />
+        <input id="w1" type="range" min="0" max="1" step="0.1" value="0.5"/> <span id="w1v">0.5</span>
+      </div>
+      <div class="row">
+        <label>人物B</label>
+        <input id="name2" placeholder="人物名" />
+        <input id="w2" type="range" min="0" max="1" step="0.1" value="0.3"/> <span id="w2v">0.3</span>
+      </div>
+      <div class="row">
+        <label>人物C</label>
+        <input id="name3" placeholder="人物名" />
+        <input id="w3" type="range" min="0" max="1" step="0.1" value="0.2"/> <span id="w3v">0.2</span>
+      </div>
+      <div class="row">
+        <label>温度</label>
+        <input id="temp" type="range" min="0" max="1" step="0.1" value="0.6"/> <span id="tempv">0.6</span>
+      </div>
+      <div class="row">
+        <label>創作度</label>
+        <input id="creative" type="range" min="0" max="1" step="0.1" value="0.4"/> <span id="creativev">0.4</span>
+      </div>
+      <div class="row">
+        <label>topK</label>
+        <input id="topK" type="number" min="1" max="30" value="12"/>
+        <label>final</label>
+        <input id="topK_final" type="number" min="1" max="30" value="6"/>
+      </div>
+      <div class="row">
+        <button id="gen">生成</button>
+        <button id="copyLogs">コピー(JSON)</button>
+        <button id="downloadTrace">trace.json ダウンロード</button>
+      </div>
+      <div id="banner" class="banner hidden"></div>
+    </section>
+
+    <section class="result">
+      <div id="card" class="card"></div>
+      <div id="sources" class="sources"></div>
+      <div id="metrics" class="metrics"></div>
+    </section>
+  </main>
+
+  <section class="console">
+    <div class="console-header">RAGコンソール（ライブログ）</div>
+    <div id="console" class="console-body"></div>
+  </section>
+
+  <script src="/app.js"></script>
+</body>
+</html>

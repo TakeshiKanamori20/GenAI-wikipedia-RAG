@@ -1,0 +1,30 @@
+* { box-sizing: border-box; }
+body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans JP', sans-serif; margin: 0; color: #1a202c; }
+header { padding: 12px 16px; background: #edf2f7; border-bottom: 1px solid #e2e8f0; }
+h1 { margin: 0 0 4px; font-size: 20px; }
+.note { margin: 4px 0 0; color: #4a5568; font-size: 12px; }
+main { display: grid; grid-template-columns: 1fr; gap: 16px; padding: 16px; }
+.form .row { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+.form label { width: 72px; color: #4a5568; font-size: 12px; }
+.form input[type="text"], .form input:not([type]) { flex: 1; padding: 6px 8px; border: 1px solid #cbd5e0; border-radius: 6px; }
+button { padding: 8px 12px; border: 1px solid #cbd5e0; background: #ffffff; border-radius: 6px; cursor: pointer; }
+button:hover { background: #f7fafc; }
+.banner { padding: 8px 12px; border-radius: 6px; }
+.banner.warn { background: #fefcbf; border: 1px solid #faf089; }
+.banner.error { background: #fed7d7; border: 1px solid #feb2b2; }
+.banner.hidden { display: none; }
+.result { display: grid; gap: 12px; }
+.card { padding: 12px; border: 1px solid #e2e8f0; border-radius: 8px; min-height: 120px; background: #fff; }
+.sources { display: flex; flex-wrap: wrap; gap: 8px; }
+.pill { display: inline-block; padding: 6px 10px; background: #edf2f7; border-radius: 999px; text-decoration: none; color: #2d3748; font-size: 12px; }
+.metrics table { border-collapse: collapse; }
+.metrics th, .metrics td { border: 1px solid #e2e8f0; padding: 4px 8px; font-size: 12px; }
+.console { position: fixed; left: 0; right: 0; bottom: 0; height: 180px; background: #1a202c; color: #e2e8f0; border-top: 1px solid #2d3748; display: flex; flex-direction: column; }
+.console-header { padding: 8px 12px; border-bottom: 1px solid #2d3748; font-weight: 600; }
+.console-body { flex: 1; overflow: auto; padding: 8px 12px; font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Courier New', monospace; font-size: 12px; }
+.logline { margin-bottom: 2px; }
+.logline .tag { display: inline-block; color: #fff; padding: 2px 6px; border-radius: 4px; margin-right: 6px; font-weight: 700; }
+.logline .time { color: #cbd5e0; margin-right: 6px; }
+@media (min-width: 800px) {
+  main { grid-template-columns: 360px 1fr; }
+}

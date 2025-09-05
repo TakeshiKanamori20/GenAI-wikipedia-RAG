@@ -1,3 +1,32 @@
+// 用語解説表示
+window.addEventListener('DOMContentLoaded', () => {
+  const info = document.createElement('div');
+  info.className = 'explain';
+  info.innerHTML = `
+    <h3>用語解説</h3>
+    <ul>
+      <li><b>重み</b>：各人物の特徴をどれだけ合成文に反映するかの割合です。</li>
+      <li><b>温度</b>：AIの生成文の多様性・ランダム性。高いほど自由な文になります。</li>
+      <li><b>創造度</b>：AIがどれだけ新しい・独創的な表現をするかの度合いです。</li>
+      <li><b>chunk（分割）</b>：長い説明文をAIが扱いやすいサイズに分割した単位です。</li>
+      <li><b>Embedding（ベクトル化）</b>：テキストをAIが意味的に理解できる数値の並び（ベクトル）に変換する処理です。</li>
+      <li><b>類似度（コサイン類似度）</b>：2つのベクトルがどれだけ似ているかを示す統計的指標。1に近いほど意味が近いです。<br>コサイン類似度は「2つのベクトルのなす角度のcos値」で、統計・機械学習でよく使われます。</li>
+      <li><b>重要部分抽出</b>：類似度が高いchunk（説明文の一部）をAIが「重要」と判断して抽出します。</li>
+    </ul>
+    <div style="font-size:0.95em;color:#555;margin-top:0.5em;">※ 類似度計算には統計的手法（コサイン類似度）を使っています。</div>
+  `;
+  document.body.insertBefore(info, document.body.firstChild);
+
+  // chunkサイズ・抽出数パラメータUI追加
+  const paramDiv = document.createElement('div');
+  paramDiv.className = 'params-extra';
+  paramDiv.innerHTML = `
+    <label>chunkサイズ: <input type="number" id="chunkSize" value="300" min="50" max="1000" step="10" style="width:60px"></label>
+    <label>重要chunk数: <input type="number" id="topN" value="3" min="1" max="10" step="1" style="width:40px"></label>
+  `;
+  document.body.insertBefore(paramDiv, document.body.children[1]);
+});
+
 const byId = (id) => document.getElementById(id);
 const fmtMs = (ms) => `${(ms/1000).toFixed(2)}s`;
 const colorByKind = {
@@ -24,7 +53,24 @@ function showLogs(logs) {
     line.className = 'logline';
     const ts = new Date(data.ts).toLocaleTimeString();
     const kind = data.kind.toUpperCase();
-    line.innerHTML = `<span class="tag" style="background:${colorByKind[data.kind]||'#4a5568'}">[${kind}]</span> <span class="time">${ts}</span> <span class="msg">${data.message}</span>`;
+    let msg = data.message;
+    // 類似度スコア付きchunk抽出ログ
+    if (data.kind === 'search' && data.similarities) {
+      msg += '<br><b>抽出された重要chunkと類似度:</b><ul>';
+      data.similarities.forEach((sim, i) => {
+        msg += `<li>chunk${i+1}: 類似度=${sim.score.toFixed(3)}<br><span style='font-size:0.9em;color:#555'>${sim.text}</span></li>`;
+      });
+      msg += '</ul>';
+    }
+    // 類似度分布の根拠説明
+    if (data.kind === 'search' && data.distribution) {
+      msg += '<details style="margin-top:4px"><summary>全chunkの類似度分布（根拠を表示）</summary><ul>';
+      data.distribution.forEach((sim, i) => {
+        msg += `<li>chunk${i+1}: 類似度=${sim.score.toFixed(3)}</li>`;
+      });
+      msg += '</ul></details>';
+    }
+    line.innerHTML = `<span class="tag" style="background:${colorByKind[data.kind]||'#4a5568'}">[${kind}]</span> <span class="time">${ts}</span> <span class="msg">${msg}</span>`;
     c.appendChild(line);
   });
   c.scrollTop = c.scrollHeight;
@@ -60,10 +106,16 @@ async function generate() {
     return;
   }
 
+  const tempVal = Number(byId('temp').value);
+  const creativeVal = Number(byId('creative').value);
+  const chunkSize = Number(byId('chunkSize').value);
+  const topN = Number(byId('topN').value);
   const body = {
     persons,
-    temp: Number(byId('temp').value),
-    creative: Number(byId('creative').value),
+    temp: tempVal,
+    creative: creativeVal,
+    chunkSize,
+    topN,
     topK: Number(byId('topK').value),
     topK_final: Number(byId('topK_final').value)
   };
@@ -85,7 +137,18 @@ async function generate() {
   }
 
   // result card
-  byId('card').innerHTML = data.html || '';
+  const params = document.createElement('div');
+  params.className = 'params';
+  params.innerHTML = `<b>重み:</b> ${persons.map(p=>p.weight).join(', ')}　<b>温度:</b> ${tempVal}　<b>創造度:</b> ${creativeVal}`;
+  byId('card').innerHTML = '';
+  byId('card').appendChild(params);
+  // 生成文（profile）があれば表示
+  if (data.profile) {
+    const profileDiv = document.createElement('div');
+    profileDiv.className = 'profile';
+    profileDiv.textContent = data.profile;
+    byId('card').appendChild(profileDiv);
+  }
   const sources = byId('sources');
   sources.innerHTML = '';
   (data.sources||[]).forEach(s => sources.appendChild(pill(s.title, s.url)));
